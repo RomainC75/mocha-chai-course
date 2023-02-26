@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - $PWD/data:/data/db
+    
+
+  express-server:
+    depends_on:
+      - mongo
+    build: ./server
+    restart: always
+    volumes: 
+      - $PWD/server/app:/usr/src/server/app
+    ports:
+      - 5000:5000
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_DOMAIN_NAME: mongo
+      PORT: 5000
+      # ME_CONFIG_MONGODB_URL: 'mongodb://root:example@mongo:27017/'
+    logging:
+      driver: journald
+      options:
+        tag: server
