@@ -4,18 +4,26 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./app/test",
+    "test:watch": "nodemon  --exec npx mocha ./app/test || true",
+    "test:report":"mocha ./app/test --reporter mochawesome --require mochawesome/register",
     "dev": "nodemon app/app.js",
     "start": "node app/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.3.4",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.9.2",
     "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3"
   }
 }
